@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 
 import { Canvas } from "react-three-fiber";
 import * as THREE from "three";
 
-import Ring from "./components/Ring";
+//Components
+import Rings from "./components/Rings";
+import Circle from "./components/Circle";
+import Line from "./components/Line";
 
 const App = () => {
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
@@ -20,12 +23,17 @@ const App = () => {
     setMouse({ x: offsetX / width, y: offsetY / height });
   };
 
+  useEffect(() => {
+    document.body.style.cursor =
+      "url('https://raw.githubusercontent.com/chenglou/react-motion/master/demos/demo8-draggable-list/cursor.png') 39 39, auto";
+  }, []);
+
   return (
     <Canvas
       camera={{ fov: 100, position: [0, 0, 3] }}
       onCreated={({ gl }) => {
         gl.toneMapping = THREE.Uncharted2ToneMapping;
-        gl.setClearColor(new THREE.Color("grey"));
+        gl.setClearColor(new THREE.Color("#424242"));
       }}
       onClick={(e) => handleClick(e)}
     >
@@ -36,11 +44,9 @@ const App = () => {
         decay={1}
       />
       <ambientLight color={"#ffffff"} intensity={1} />
-      <Ring args={[0.8, 1.0, 10]} color={"#000429"} mouse={mouse} />
-      <Ring args={[0.6, 0.8, 10]} color={"#060940"} mouse={mouse} />
-      <Ring args={[0.4, 0.6, 10]} color={"#2B1773"} mouse={mouse} />
-      <Ring args={[0.2, 0.4, 10]} color={"#7D52D9"} mouse={mouse} />
-      <Ring args={[0.0, 0.2, 10]} color={"#F20574"} mouse={mouse} />
+      <Line mouse={mouse} /> {/* It doesn't work, I don't know why */}
+      <Rings mouse={mouse} />
+      <Circle mouse={mouse} />
     </Canvas>
   );
 };
