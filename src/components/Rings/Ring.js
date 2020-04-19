@@ -4,35 +4,35 @@ import { useFrame, useThree } from "react-three-fiber";
 
 import lerp from "lerp"; /*Linear interpolation*/
 
-const Ring = (props) => {
+const Ring = ({ args, color, mouse, t }) => {
   const mesh = useRef();
   const { viewport } = useThree();
 
-  const next_x = useMemo(() => props.mouse.x * (viewport.width / 2), [
-    props.mouse.x,
+  const next_x = useMemo(() => mouse.x * (viewport.width / 2), [
+    mouse.x,
     viewport.width,
   ]);
 
-  const next_y = useMemo(() => props.mouse.y * (viewport.height / 2), [
-    props.mouse.y,
+  const next_y = useMemo(() => mouse.y * (viewport.height / 2), [
+    mouse.y,
     viewport.height,
   ]);
 
-  let t = 0;
+  let t_aux = 0;
 
   useFrame(() => {
     if (mesh.current.position.x !== next_x) {
-      mesh.current.position.x = lerp(mesh.current.position.x, next_x, t);
-      mesh.current.position.y = lerp(mesh.current.position.y, next_y, t);
-      t += props.t;
+      mesh.current.position.x = lerp(mesh.current.position.x, next_x, t_aux);
+      mesh.current.position.y = lerp(mesh.current.position.y, next_y, t_aux);
+      t_aux += t;
     }
     mesh.current.rotation.z += 0.01;
   });
 
   return (
     <mesh ref={mesh}>
-      <ringGeometry attach="geometry" args={props.args} />
-      <meshPhongMaterial attach="material" color={props.color} />
+      <ringGeometry attach="geometry" args={args} />
+      <meshPhongMaterial attach="material" color={color} />
     </mesh>
   );
 };

@@ -14,13 +14,10 @@ const App = () => {
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
 
   const handleClick = (e) => {
-    const width = window.innerWidth / 2;
-    const height = window.innerHeight / 2;
-
-    const offsetX = e.clientX - width;
-    const offsetY = height - e.clientY;
-
-    setMouse({ x: offsetX / width, y: offsetY / height });
+    setMouse({
+      x: (e.clientX / window.innerWidth) * 2 - 1,
+      y: -(e.clientY / window.innerHeight) * 2 + 1,
+    });
   };
 
   useEffect(() => {
@@ -44,7 +41,7 @@ const App = () => {
         decay={1}
       />
       <ambientLight color={"#ffffff"} intensity={1} />
-      <Line mouse={mouse} /> {/* It doesn't work, I don't know why */}
+      <Line mouse={mouse} />
       <Rings mouse={mouse} />
       <Circle mouse={mouse} />
     </Canvas>

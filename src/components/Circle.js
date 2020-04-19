@@ -2,18 +2,18 @@ import React, { useRef, useMemo } from "react";
 
 import { useFrame, useThree } from "react-three-fiber";
 
-const Circle = (props) => {
+const Circle = ({ mouse }) => {
   const material = useRef();
   const mesh = useRef();
   const { viewport } = useThree();
 
-  const next_x = useMemo(() => props.mouse.x * (viewport.width / 2), [
-    props.mouse.x,
+  const next_x = useMemo(() => mouse.x * (viewport.width / 2), [
+    mouse.x,
     viewport.width,
   ]);
 
-  const next_y = useMemo(() => props.mouse.y * (viewport.height / 2), [
-    props.mouse.y,
+  const next_y = useMemo(() => mouse.y * (viewport.height / 2), [
+    mouse.y,
     viewport.height,
   ]);
 
